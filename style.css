@@ -1,0 +1,105 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #87CEEB; /* Sky Blue */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.chat-container {
+    width: 350px;
+    height: 550px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: #1E90FF; /* Dodger Blue */
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    background: #f0f8ff; /* Alice Blue */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bot {
+    align-self: flex-start;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 2px;
+}
+
+.user {
+    align-self: flex-end;
+    background: #1E90FF;
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.loading {
+    font-style: italic;
+    color: #777;
+    background: transparent;
+    border: none;
+}
+
+.input-area {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+button {
+    background: #1E90FF;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover { background: #0069d9; }

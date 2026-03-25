@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <i class="fa-solid fa-cloud-sun-rain"></i> Weather Bot
+        </div>
+
+        <div id="chat-box" class="chat-box">
+            <div class="message bot">
+                <p>Hello! 🌤️ Enter a <b>City Name</b> (e.g., London, Mumbai, Tokyo) to get the current weather.</p>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type a city name..." autocomplete="off">
+            <button onclick="sendMessage()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            let input = document.getElementById("userInput");
+            let message = input.value.trim();
+            let chatBox = document.getElementById("chat-box");
+
+            if (message === "") return;
+
+            // 1. Show User Message
+            chatBox.innerHTML += `<div class="message user"><p>${message}</p></div>`;
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Show Loading Animation
+            let loadingId = "loading-" + Date.now();
+            chatBox.innerHTML += `<div class="message bot loading" id="${loadingId}"><p>Checking satellite...</p></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 3. Fetch Weather from Python Backend
+            try {
+                let response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: message })
+                });
+
+                let data = await response.json();
+
+                // 4. Remove loading & Show Result
+                document.getElementById(loadingId).remove();
+                chatBox.innerHTML += `<div class="message bot"><p>${data.response}</p></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                chatBox.innerHTML += `<div class="message bot"><p>Error connecting to server.</p></div>`;
+            }
+        }
+
+        // Enter key support
+        document.getElementById("userInput").addEventListener("keypress", function(e) {
+            if(e.key === "Enter") sendMessage();
+        });
+    </script>
+
+</body>
+</html>
