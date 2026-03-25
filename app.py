@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 
-API_KEY = "72982cc07057519a673d3fa3afb2041b"
+API_KEY = "API KEY"
 
 def get_weather(city):
     try:
